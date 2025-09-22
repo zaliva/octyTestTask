@@ -1,0 +1,8 @@
+//MARK: General
+
+"networkErrorMsg" = "Network Error";
+
+"alertTitleAccessSettings" = "Please allow access";
+"settings" = "Settings";
+"cancel" = "Cancel";
+"photoGalleryAccessSettings" = "Please go to settings and set photos to on";
