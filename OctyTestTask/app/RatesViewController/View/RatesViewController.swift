@@ -1,7 +1,7 @@
 import UIKit
 
 protocol RatesViewControllerProtocol: NSObjectProtocol {
-    func updateCollectionView()
+    func updateCollectionView(animating: Bool)
     func showError(error: ApiError)
 }
 
@@ -16,6 +16,12 @@ class RatesViewController: BaseViewController<RatesViewModel> {
         
         configureCollectionView()
         titleLabel.text = viewModel.type.rawValue
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        adapter.applyWithReloadItems(viewModel.ratesModels, animating: false)
+        viewModel.getRatesList()
     }
     
     private func configureCollectionView() {
@@ -52,8 +58,8 @@ class RatesViewController: BaseViewController<RatesViewModel> {
 }
 
 extension RatesViewController: RatesViewControllerProtocol {
-    func updateCollectionView() {
-        adapter.apply(viewModel.ratesModels, animating: true)
+    func updateCollectionView(animating: Bool) {
+        adapter.apply(viewModel.ratesModels, animating: animating)
     }
     
     func showError(error: ApiError) {
@@ -84,6 +90,22 @@ final class RatesCollectionAdapter: NSObject {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([0])
         snapshot.appendItems(models.map { .rate($0) }, toSection: 0)
+        dataSource.apply(snapshot, animatingDifferences: animating)
+    }
+    
+    func applyWithReloadItems(_ models: [RatesDataModel], animating: Bool = true) {
+        let newItems = models.map { Item.rate($0) }
+
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        snapshot.appendSections([0])
+        snapshot.appendItems(newItems, toSection: 0)
+
+        let existingItems = Set(dataSource.snapshot().itemIdentifiers)
+        let itemsToReload = newItems.filter { existingItems.contains($0) }
+        if !itemsToReload.isEmpty {
+            snapshot.reloadItems(itemsToReload)
+        }
+
         dataSource.apply(snapshot, animatingDifferences: animating)
     }
 

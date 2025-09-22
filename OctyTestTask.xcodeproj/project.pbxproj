@@ -10,7 +10,18 @@
 		959F420CBA4096B64335D7F2 /* Pods_OctyTestTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9CA99DBDABD7AE968559C1A /* Pods_OctyTestTask.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4A966B6A2E814A550029C36C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4AC7A0992E7DBF0D00F02EEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4AC7A0A02E7DBF0D00F02EEE;
+			remoteInfo = OctyTestTask;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		4A966B662E814A550029C36C /* OctyTestTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OctyTestTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AC7A0A12E7DBF0D00F02EEE /* OctyTestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OctyTestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FA148C4B7E37F248E9E1785 /* Pods-OctyTestTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OctyTestTask.release.xcconfig"; path = "Target Support Files/Pods-OctyTestTask/Pods-OctyTestTask.release.xcconfig"; sourceTree = "<group>"; };
 		D9CA99DBDABD7AE968559C1A /* Pods_OctyTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OctyTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -28,6 +39,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		4A966B672E814A550029C36C /* OctyTestTaskTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = OctyTestTaskTests;
+			sourceTree = "<group>";
+		};
 		4AC7A0A32E7DBF0D00F02EEE /* OctyTestTask */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -39,6 +55,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4A966B632E814A550029C36C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4AC7A09E2E7DBF0D00F02EEE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -63,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				4AC7A0A32E7DBF0D00F02EEE /* OctyTestTask */,
+				4A966B672E814A550029C36C /* OctyTestTaskTests */,
 				4AC7A0A22E7DBF0D00F02EEE /* Products */,
 				2944D578EA324AEF728AF5E2 /* Pods */,
 				684431C26271B89390F5BA56 /* Frameworks */,
@@ -73,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				4AC7A0A12E7DBF0D00F02EEE /* OctyTestTask.app */,
+				4A966B662E814A550029C36C /* OctyTestTaskTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,6 +113,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4A966B652E814A550029C36C /* OctyTestTaskTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A966B6E2E814A550029C36C /* Build configuration list for PBXNativeTarget "OctyTestTaskTests" */;
+			buildPhases = (
+				4A966B622E814A550029C36C /* Sources */,
+				4A966B632E814A550029C36C /* Frameworks */,
+				4A966B642E814A550029C36C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4A966B6B2E814A550029C36C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				4A966B672E814A550029C36C /* OctyTestTaskTests */,
+			);
+			name = OctyTestTaskTests;
+			packageProductDependencies = (
+			);
+			productName = OctyTestTaskTests;
+			productReference = 4A966B662E814A550029C36C /* OctyTestTaskTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4AC7A0A02E7DBF0D00F02EEE /* OctyTestTask */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4AC7A0B72E7DBF0E00F02EEE /* Build configuration list for PBXNativeTarget "OctyTestTask" */;
@@ -120,6 +168,10 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					4A966B652E814A550029C36C = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 4AC7A0A02E7DBF0D00F02EEE;
+					};
 					4AC7A0A02E7DBF0D00F02EEE = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -140,11 +192,19 @@
 			projectRoot = "";
 			targets = (
 				4AC7A0A02E7DBF0D00F02EEE /* OctyTestTask */,
+				4A966B652E814A550029C36C /* OctyTestTaskTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4A966B642E814A550029C36C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4AC7A09F2E7DBF0D00F02EEE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -197,6 +257,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4A966B622E814A550029C36C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4AC7A09D2E7DBF0D00F02EEE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -206,7 +273,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4A966B6B2E814A550029C36C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4AC7A0A02E7DBF0D00F02EEE /* OctyTestTask */;
+			targetProxy = 4A966B6A2E814A550029C36C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4A966B6C2E814A550029C36C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 888396H66V;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ostyTestTask.ios.OctyTestTaskTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OctyTestTask.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OctyTestTask";
+			};
+			name = Debug;
+		};
+		4A966B6D2E814A550029C36C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 888396H66V;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ostyTestTask.ios.OctyTestTaskTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OctyTestTask.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OctyTestTask";
+			};
+			name = Release;
+		};
 		4AC7A0B82E7DBF0E00F02EEE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3110494F0D5617202261A18 /* Pods-OctyTestTask.debug.xcconfig */;
@@ -391,6 +502,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4A966B6E2E814A550029C36C /* Build configuration list for PBXNativeTarget "OctyTestTaskTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A966B6C2E814A550029C36C /* Debug */,
+				4A966B6D2E814A550029C36C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4AC7A09C2E7DBF0D00F02EEE /* Build configuration list for PBXProject "OctyTestTask" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
