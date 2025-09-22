@@ -2,7 +2,7 @@ import Foundation
 
 enum UrlRequest: String {
 
-    case getList = "/"
+    case rates = "/rest/rates"
     
     var fullUrl: String { "\(baseUrl)\(rawValue)" }
 }

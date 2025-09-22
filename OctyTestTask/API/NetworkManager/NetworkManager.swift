@@ -7,7 +7,7 @@ class NetworkManager {
     
     class private func handleModel<M: Codable>(json: JSON, success: SuccessModel<M>? = nil, failure: FailureHandler? = nil) {
         guard let data = try? json.rawData() else {
-            failure?(ApiError(propertyName: LocalizeStrings.networkError, displayMessage: LocalizeStrings.networkErrorMsg, errorCode: ErrorCode.errorParsing))
+            failure?(ApiError(propertyName: LocalizeStrings.networkError, message: LocalizeStrings.networkErrorMsg, errorCode: ErrorCode.errorParsing))
             return
         }
         
@@ -16,13 +16,13 @@ class NetworkManager {
             success?(resultModel)
         } catch let error {
             debugPrint("\(error)")
-            failure?(ApiError(propertyName: LocalizeStrings.networkError, displayMessage: error.localizedDescription, errorCode: ErrorCode.errorDecode))
+            failure?(ApiError(propertyName: LocalizeStrings.networkError, message: error.localizedDescription, errorCode: ErrorCode.errorDecode))
         }
     }
     
     class private func handleArrayOfModels<M: Codable>(json: JSON, success: SuccessModel<[M]>? = nil, failure: FailureHandler? = nil) {
         guard let data = try? json.rawData() else {
-            failure?(ApiError(propertyName: LocalizeStrings.networkError, displayMessage: LocalizeStrings.networkErrorMsg, errorCode: ErrorCode.errorParsing))
+            failure?(ApiError(propertyName: LocalizeStrings.networkError, message: LocalizeStrings.networkErrorMsg, errorCode: ErrorCode.errorParsing))
             return
         }
         do {
@@ -30,9 +30,17 @@ class NetworkManager {
             success?(resultModel)
         } catch {
             debugPrint("\(error)")
-            failure?(ApiError(propertyName: LocalizeStrings.networkError, displayMessage: error.localizedDescription, errorCode: ErrorCode.errorDecode))
+            failure?(ApiError(propertyName: LocalizeStrings.networkError, message: error.localizedDescription, errorCode: ErrorCode.errorDecode))
         }
     }
 
+    //MARK: -
+    class func getRates(success: (([ResponceRatesModel]) -> Void)? = nil, failure: FailureHandler? = nil) {
+        HTTPManager.get(url: .rates, params: nil) { result in
+            handleArrayOfModels(json: result, success: success, failure: failure)
+        } failureHandler: { error in
+            failure?(error)
+        }
+    }
 }
 

@@ -13,10 +13,10 @@ class CoordinatorImpl {
         UIApplication.shared.delegate?.window??.makeKeyAndVisible()
     }
     
-    func showMainViewController() {
-        let navController = UINavigationController(rootViewController: CompositionRoot.resolveMainViewController())
+    func showMainTabBarController() {
+        let navController = UINavigationController(rootViewController: CompositionRoot.resolveTabBarController())
         navController.navigationBar.isHidden = true
-        navController.navigationController?.setNavigationBarHidden(true, animated: false)
+        navController.setNavigationBarHidden(true, animated: false)
         UIApplication.shared.delegate?.window??.rootViewController = navController
         UIApplication.shared.delegate?.window??.makeKeyAndVisible()
     }

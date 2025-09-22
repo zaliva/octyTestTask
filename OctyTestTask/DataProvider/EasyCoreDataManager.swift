@@ -9,13 +9,13 @@ final class EasyCoreDataManager {
         
     private init() { 
         let bundle = Bundle(for: type(of: self))
-        guard let modelURL = bundle.url(forResource: "CurrencyDataModel", withExtension: "momd") else {
+        guard let modelURL = bundle.url(forResource: "RatesData", withExtension: "momd") else {
             fatalError("Failed to find model URL")
         }
         guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
             fatalError("Failed to load model")
         }
-        persistentContainer = NSPersistentContainer(name: "CurrencyDataModel", managedObjectModel: model)
+        persistentContainer = NSPersistentContainer(name: "RatesData", managedObjectModel: model)
     }
         
     var context: NSManagedObjectContext { persistentContainer.viewContext }
@@ -31,10 +31,21 @@ final class EasyCoreDataManager {
             completion?(.tryingRepeatLoading)
             return
         }
+        // Configure store description before loading
+        for desc in persistentContainer.persistentStoreDescriptions {
+            desc.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+            desc.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+            desc.shouldMigrateStoreAutomatically = true
+            desc.shouldInferMappingModelAutomatically = true
+        }
         persistentContainer.loadPersistentStores { [weak self] description, error in
             debugPrint(description)
             guard let error = error else {
                 self?.isLoadedPersistentStores = true
+                self?.persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
+                self?.persistentContainer.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                self?.persistentContainer.viewContext.undoManager = nil
+                self?.persistentContainer.viewContext.name = "viewContext"
                 completion?(.persistentLoaded)
                 return
             }
@@ -70,6 +81,18 @@ final class EasyCoreDataManager {
         context.perform { [unowned self] in
             self.saveContext()
             completion()
+        }
+    }
+    
+    func performBackgroundTask(_ block: @escaping (NSManagedObjectContext) -> Void) {
+        guard isLoadedPersistentStores else {
+            debugPrint("Core Data. Error isLoadedPersistentStores = false")
+            return
+        }
+        persistentContainer.performBackgroundTask { context in
+            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            context.name = "backgroundContext"
+            block(context)
         }
     }
     
@@ -168,13 +191,13 @@ final class EasyCoreDataManager {
         isLoadedPersistentStores = false
         
         let bundle = Bundle(for: type(of: self))
-        guard let modelURL = bundle.url(forResource: "CurrencyDataModel", withExtension: "momd") else {
+        guard let modelURL = bundle.url(forResource: "RatesData", withExtension: "momd") else {
             fatalError("Failed to find model URL")
         }
         guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
             fatalError("Failed to load model")
         }
-        persistentContainer = NSPersistentContainer(name: "CurrencyDataModel", managedObjectModel: model)
+        persistentContainer = NSPersistentContainer(name: "RatesData", managedObjectModel: model)
         loadPersistentStores { status in
             debugPrint("Core Data. Reloaded new persistent stores with status \(status)")
         }

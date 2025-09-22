@@ -8,8 +8,7 @@ class NetworkSessionManager {
 
     private init() {
         let configuration = URLSessionConfiguration.default
-        var headers = HTTPHeaders.default
-        headers["Content-Type"] = "application/json"
+        let headers = HTTPHeaders.default
         configuration.headers = headers
         configuration.timeoutIntervalForRequest = 60.0
         self.sessionManager = Session(configuration: configuration, interceptor: JWTAccessTokenInterceptor())
@@ -18,27 +17,35 @@ class NetworkSessionManager {
 
 class API {
     static func authorizedHeaders() -> HTTPHeaders {
-        var headers: HTTPHeaders = [
-            "content-type": "application/json"
-        ]
+        var headers: HTTPHeaders = ["content-type": "application/json"]
+        
+        if !SWOPApiKey.isEmpty {
+            headers["Authorization"] = "ApiKey \(SWOPApiKey)"
+        } else if let encryptApiKeyData = Data(base64Encoded: encryptApiKey), let dataDecrypt = EncryptionTools.tiger2_aesDecrypt(encryptApiKeyData), let decryptApiKeyStr = String(data: dataDecrypt, encoding: .utf8) {
+            headers["Authorization"] = "ApiKey \(decryptApiKeyStr)"
+        }
+        
         return headers
     }
 }
 
 struct ErrorResponse: Codable {
-    let success: Bool
-    let errors: [ApiError]
+    let error: ApiError
 }
 
 struct ApiError: Codable {
     let propertyName: String
-    let displayMessage: String
-    let errorCode: Int
+    let message: String
+    let errorCode: Int?
     
-    init(propertyName: String, displayMessage: String, errorCode: Int) {
+    init(propertyName: String, message: String, errorCode: Int) {
         self.propertyName = propertyName
-        self.displayMessage = displayMessage
+        self.message = message
         self.errorCode = errorCode
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case message, propertyName = "type", errorCode
     }
 }
 

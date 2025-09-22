@@ -13,9 +13,19 @@ class CompositionRootImpl {
         return vc
     }
     
-    func resolveMainViewController() -> MainViewController {
-        let vc = MainViewController.instantiateFromStoryboard("MainViewController")
-        vc.viewModel = MainViewModel(view: vc)
+    func resolveTabBarController() -> MainTabBarController {
+        return MainTabBarController()
+    }
+    
+    func resolveRatesViewController() -> RatesViewController {
+        let vc = RatesViewController.instantiateFromStoryboard("RatesViewController")
+        vc.viewModel = RatesViewModel(view: vc, type: .list)
+        return vc
+    }
+    
+    func resolveFavoritesViewController() -> RatesViewController {
+        let vc = RatesViewController.instantiateFromStoryboard("RatesViewController")
+        vc.viewModel = RatesViewModel(view: vc, type: .favorites)
         return vc
     }
 }

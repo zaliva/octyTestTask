@@ -6,7 +6,7 @@ typealias SuccessHandler = (JSON) -> Void
 typealias FailureHandler = (ApiError) -> Void
 
 class HTTPManager {
-
+    
     //MARK: - GET
     class func get(url: UrlRequest, params: [String: Any]?, successHandler: SuccessHandler? = nil, failureHandler: FailureHandler? = nil) {
         
@@ -15,7 +15,7 @@ class HTTPManager {
         if let params = params {
             requestUrl += convertDictParamsToStringUrl(params)
         }
-
+        
         NetworkSessionManager.shared
             .sessionManager
             .request(requestUrl,
@@ -33,7 +33,7 @@ class HTTPManager {
                 }
             }
     }
-
+    
     //MARK: - POST
     class func post(url: UrlRequest, params: [String: Any]?, successHandler: SuccessHandler? = nil, failureHandler: FailureHandler? = nil) {
         NetworkSessionManager.shared
@@ -57,21 +57,17 @@ class HTTPManager {
     
     //MARK: - Failure
     private class func handleFailureData(data: Data, failureHandler: FailureHandler?, defaultError: ApiError? = nil) {
-        let defaultError: ApiError = defaultError != nil ? defaultError! : ApiError(propertyName: LocalizeStrings.networkError, displayMessage: LocalizeStrings.networkErrorMsg, errorCode: ErrorCode.unknownСodeFromServer)
+        let defaultError: ApiError = defaultError != nil ? defaultError! : ApiError(propertyName: LocalizeStrings.networkError, message: LocalizeStrings.networkErrorMsg, errorCode: ErrorCode.unknownСodeFromServer)
         do {
             let resultModel = try JSONDecoder().decode(ErrorResponse.self, from: data)
-            if let firstError = resultModel.errors.first {
-                failureHandler?(firstError)
-            } else {
-                failureHandler?(defaultError)
-            }
+            failureHandler?(resultModel.error)
         } catch {
             failureHandler?(defaultError)
         }
     }
-
+    
     private class func handleFailureResponse(response: AFDataResponse<Data>, responseError: AFError, failureHandler: FailureHandler?) {
-        let defaultError = ApiError(propertyName: LocalizeStrings.networkError, displayMessage: responseError.localizedDescription, errorCode: responseError.responseCode ?? ErrorCode.unknownСodeFromServer)
+        let defaultError = ApiError(propertyName: LocalizeStrings.networkError, message: responseError.localizedDescription, errorCode: responseError.responseCode ?? ErrorCode.unknownСodeFromServer)
         guard let data = response.data else {
             failureHandler?(defaultError)
             return
@@ -83,12 +79,12 @@ class HTTPManager {
     private class func handleSuccessResponse(url: String, data: Data, successHandler: SuccessHandler? = nil, failureHandler: FailureHandler? = nil) {
         do {
             let json = try JSON(data: data, options: [])
-                successHandler?(json)
+            successHandler?(json)
         } catch let error {
-            failureHandler?(ApiError(propertyName: LocalizeStrings.networkError, displayMessage: error.localizedDescription, errorCode: ErrorCode.errorParsing))
+            failureHandler?(ApiError(propertyName: LocalizeStrings.networkError, message: error.localizedDescription, errorCode: ErrorCode.errorParsing))
         }
     }
-
+    
     private class func convertDictParamsToStringUrl(_ params: [String: Any]) -> String {
         var stringUrl = String()
         for (key, value) in params {

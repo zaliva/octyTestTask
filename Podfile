@@ -8,5 +8,6 @@ target 'OctyTestTask' do
   pod 'Alamofire'
   pod 'SwiftyJSON'
   pod 'SnapKit'
+  pod 'CryptoSwift'
 
 end
