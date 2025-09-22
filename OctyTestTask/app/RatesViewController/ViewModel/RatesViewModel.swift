@@ -12,11 +12,6 @@ class RatesViewModel: ViewModel {
         self.type = type
     }
     
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        getRatesList()
-    }
-    
     func getRatesList() {
         Toast.show()
         NetworkManager.getRates { [weak self] array in
@@ -29,7 +24,8 @@ class RatesViewModel: ViewModel {
             case .favorites:
                 self.ratesModels = RatesDataProvider.getFavoritesRatesDataModels()
             }
-            self.view?.updateCollectionView()
+            self.ratesModels.sort { $0.id < $1.id }
+            self.view?.updateCollectionView(animating: false)
         } failure: { [weak self] error in
             Toast.dismiss()
             self?.getRatesFormCoreData()
@@ -44,20 +40,13 @@ class RatesViewModel: ViewModel {
         case .favorites:
             self.ratesModels = RatesDataProvider.getFavoritesRatesDataModels()
         }
-        self.view?.updateCollectionView()
+        self.ratesModels.sort { $0.id < $1.id }
+        self.view?.updateCollectionView(animating: true)
     }
     
     func addOrRemoveFavorites(model: RatesDataModel) {
         RatesDataProvider.addOrRemoveFavorites(model, isFavorites: !model.isFavorites)
-        switch type {
-        case .list:
-            if let idx = self.ratesModels.firstIndex(where: { $0.id == model.id }) {
-                self.ratesModels[idx].isFavorites.toggle()
-            }
-        case .favorites:
-            self.ratesModels.removeAll { $0.id == model.id }
-        }
-        self.view?.updateCollectionView()
+        getRatesFormCoreData()
     }
 }
 

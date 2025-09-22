@@ -31,9 +31,7 @@ class RatesCell: UICollectionViewCell {
     
     @IBAction func addOrRemoveFavoritesAction(_ sender: Any) {
         if let model = currentModel {
-            model.isFavorites.toggle()
-            currentModel = model
-            let image = model.isFavorites ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+            let image = !model.isFavorites ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
             addOrRemoveFavoritesBtn.setImage(image, for: .normal)
         }
         addOrRemoveFavorites?()
